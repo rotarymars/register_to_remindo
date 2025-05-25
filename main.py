@@ -40,6 +40,7 @@ def registrate(a: [str], b: [str]):
     except Exception:
         pass
     for front, back in zip(a, b):
+        print(front, back)
         time.sleep(1)
         try:
             Alert(driver).dismiss()
