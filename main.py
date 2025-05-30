@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.alert import Alert
 import time
+from urllib.parse import quote
 
 driver_path = "/home/rotarymars/bin/chromedriver"
 
@@ -46,7 +47,10 @@ def registrate(a: [str], b: [str]):
             Alert(driver).dismiss()
         except Exception:
             pass
-        driver.get(f"https://remindo.co/create/text?message={front}&memo={back}")
+        encoded_front = quote(front)
+        encoded_back = quote(back)
+        driver.get(f"https://remindo.co/create/text?message={encoded_front}&memo={encoded_back}")
+        print(f"https://remindo.co/create/text?message={encoded_front}&memo={encoded_back}")
         time.sleep(1)
         try:
             Alert(driver).dismiss()
@@ -64,28 +68,33 @@ def registrate(a: [str], b: [str]):
 def main():
     front_elements = []
     back_elements = []
-    pending_input = ""
+    current_front = []
+    current_back = []
+    is_front = True
+    
     while True:
-        user_input = ""
         try:
-            user_input = input()
-        except EOFError:
-            pending_input += user_input
-            break
-        if not user_input.strip():
-            if len(front_elements) == len(back_elements):
-                front_elements.append(pending_input)
-                pending_input = ""
+            line = input()
+            if not line.strip():
+                if is_front and current_front:
+                    front_elements.append("\n".join(current_front))
+                    current_front = []
+                    is_front = False
+                elif not is_front and current_back:
+                    back_elements.append("\n".join(current_back))
+                    current_back = []
+                    is_front = True
             else:
-                back_elements.append(pending_input)
-                pending_input = ""
-        else:
-            pending_input += user_input
-    if pending_input:
-        if len(front_elements) == len(back_elements):
-            front_elements.append(pending_input)
-        else:
-            back_elements.append(pending_input)
+                if is_front:
+                    current_front.append(line)
+                else:
+                    current_back.append(line)
+        except EOFError:
+            if current_front:
+                front_elements.append("\n".join(current_front))
+            if current_back:
+                back_elements.append("\n".join(current_back))
+            break
     for a,b in zip(front_elements, back_elements):
         print(a)
         print(b)
