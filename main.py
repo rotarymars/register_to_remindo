@@ -5,8 +5,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.alert import Alert
 import time
 from urllib.parse import quote
+import tqdm
 
-driver_path = "/home/rotarymars/bin/chromedriver"
+driver_path = "/home/rotarymars/bin/chromedriver-linux64/chromedriver"
 
 def initialize_browser():
     global driver, driver_path
@@ -95,7 +96,7 @@ def main():
             if current_back:
                 back_elements.append("\n".join(current_back))
             break
-    for a,b in zip(front_elements, back_elements):
+    for a,b in tqdm.tqdm(zip(front_elements, back_elements)):
         print(a)
         print(b)
         print()
