@@ -22,3 +22,24 @@ you open another line between the front and the back
 ```
 
 Also, you would have to put your credentials as `username.txt` and `password.txt` in order to login and save your cards
+
+# How to validate your input?
+Before registering cards, you can validate your input format using the `check_inputs.py` script:
+
+```bash
+python check_inputs.py
+```
+
+This script will:
+- Check if you have matching front/back pairs (even number of elements)
+- Validate the input format
+- Display all validated card pairs with clear formatting
+
+The script expects the same input format as `main.py` and will output:
+- ✓ PASSED if all cards have matching front/back pairs
+- ✗ FAILED if there are mismatched or missing pairs
+
+Example usage:
+```bash
+cat your_cards.txt | python check_inputs.py
+```
