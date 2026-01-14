@@ -3,6 +3,7 @@
 Script to check whether inputs match prerequisites (has an even number of word/sentence pairs).
 After checking, outputs those pairs with good format.
 """
+import sys
 
 def parse_input():
     """Parse input from stdin into front and back elements."""
@@ -116,4 +117,4 @@ def main():
 
 
 if __name__ == "__main__":
-    exit(main())
+    sys.exit(main())
