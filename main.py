@@ -1,5 +1,4 @@
 from selenium import webdriver
-from selenium.webdriver.chrome import service as fs
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.alert import Alert
@@ -7,12 +6,10 @@ import time
 from urllib.parse import quote
 import tqdm
 
-driver_path = "/home/rotarymars/bin/chromedriver-linux64/chromedriver"
-
 def initialize_browser():
-    global driver, driver_path
-    chrome_driver = fs.Service(executable_path=driver_path)
-    driver = webdriver.Chrome(service=chrome_driver)
+    global driver
+    # Selenium Manager (Selenium 4.6+) resolves and manages the driver automatically.
+    driver = webdriver.Chrome()
     driver.get("https://remindo.co/start")
     with open("username.txt", "r") as f:
         username = f.read().strip()
